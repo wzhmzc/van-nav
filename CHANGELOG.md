@@ -3,6 +3,24 @@
 本文件记录本项目（[thirsty5034/van-nav](https://github.com/thirsty5034/van-nav)）的更新日志。上游项目（[Mereithhh/van-nav](https://github.com/Mereithhh/van-nav)）的历史记录附在末尾。
 
 
+## [2.4.3] - 2026-07-26
+
+### 🐛 Bug Fixes
+
+- **中文输入法搜索竞态**：拼音组字期间不驱动列表过滤；汉字上屏后立即 flush；确认后立刻回车按汉字打开首条匹配
+- **首页首屏装不满**：按视口与列数估算首屏卡片数，内容高度不足时自动补批次
+- **离线/弱网首屏与图片**：`FetchList` 4s 超时 + SWR 本地缓存优先；`/api/img` CacheFirst + logo 预热
+
+### 🔒 Security
+
+- **Dependabot 依赖修复**：axios 1.16.1 → 1.18.0；form-data / launch-editor 通过 pnpm.overrides 锁定修复版本
+
+### ⚙️ Changed
+
+- 搜索防抖 300ms → 150ms
+
+---
+
 ## [2.0.2] - 2026-05-31
 
 ### 🚀 New Features
