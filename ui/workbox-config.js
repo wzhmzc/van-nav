@@ -7,6 +7,21 @@ module.exports = {
   skipWaiting: true,
   clientsClaim: true,
   runtimeCaching: [{
+    // Logo 代理：在线命中后写入缓存，离线可继续显示图片
+    // 必须放在通用 /api/ NetworkOnly 之前，优先匹配
+    urlPattern: /\/api\/img(\?|$)/,
+    handler: 'CacheFirst',
+    options: {
+      cacheName: 'van-nav-img',
+      expiration: {
+        maxEntries: 500,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+      },
+      cacheableResponse: {
+        statuses: [0, 200],
+      },
+    },
+  }, {
     urlPattern: /^https?.*\/api\//,
     handler: 'NetworkOnly',
   }, {
@@ -24,4 +39,4 @@ module.exports = {
       },
     },
   }]
-}; 
+};

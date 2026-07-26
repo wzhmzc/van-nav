@@ -5,6 +5,10 @@ import "./index.css";
 interface SearchBarProps {
   setSearchText: (t: string) => void;
   searchString: string;
+  /** IME 开始组字（拼音候选未上屏） */
+  onCompositionStart?: () => void;
+  /** IME 上屏结束；value 为 end 时刻 input 的真实值，避免与 onChange 竞态 */
+  onCompositionEnd?: (value: string) => void;
 }
 
 const SearchBar = (props: SearchBarProps) => {
@@ -48,6 +52,12 @@ const SearchBar = (props: SearchBarProps) => {
           onBlur={handleBlur}
           onChange={(ev) => {
             props.setSearchText(ev.target.value);
+          }}
+          onCompositionStart={() => {
+            props.onCompositionStart?.();
+          }}
+          onCompositionEnd={(ev) => {
+            props.onCompositionEnd?.(ev.currentTarget.value);
           }}
         ></input>
       </div>
