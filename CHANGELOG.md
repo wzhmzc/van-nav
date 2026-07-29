@@ -3,6 +3,21 @@
 本文件记录本项目（[thirsty5034/van-nav](https://github.com/thirsty5034/van-nav)）的更新日志。上游项目（[Mereithhh/van-nav](https://github.com/Mereithhh/van-nav)）的历史记录附在末尾。
 
 
+## [2.4.4] - 2026-07-29
+
+### 🔒 Security
+
+- **Go 与 x/* 依赖**：go 1.25.0；`golang.org/x/crypto` 0.52.0、`x/net` 0.55.0、`x/text` 0.37.0
+- **前端 Plan A/B overrides**：form-data / launch-editor / brace-expansion（含 1.1.16）/ js-yaml / serialize-javascript（≥7.0.5）/ svgo 2.8.3 等；刷新 pnpm-lock
+- **直接依赖对齐**：react-router-dom ^7.18.0、postcss ^8.5.18
+
+### ⚙️ Changed
+
+- CI 与 Dockerfile Go 版本同步 1.25
+- pnpm 11：overrides 迁入 `ui/pnpm-workspace.yaml`
+
+---
+
 ## [2.4.3] - 2026-07-26
 
 ### 🐛 Bug Fixes
