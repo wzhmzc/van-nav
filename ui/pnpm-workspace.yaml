@@ -6,6 +6,7 @@ allowBuilds:
 overrides:
   # --- 既有（master 已落地；部分覆盖 CRA 传递依赖，保留以维持 lock 一致）---
   nth-check: ">=2.0.1"
+  # 统一抬到安全线；禁止再钉 @6: 6.0.2（会压过本条，导致 #53/#97 残留）
   serialize-javascript: ">=7.0.5"
   underscore: ">=1.13.8"
   tmp: ">=0.2.6"
@@ -27,6 +28,9 @@ overrides:
   websocket-driver: 0.7.5
   http-proxy-middleware@2: 2.0.10
   body-parser@1: 1.20.6
-  serialize-javascript@6: 6.0.2
   serialize-javascript@7: 7.0.5
   svgo@2: 2.8.3
+
+  # --- Plan B：补齐 CRA 传递依赖安全线（Dependabot open #134/#53/#97/#141）---
+  brace-expansion@1: 1.1.16
+  svgo@1: 2.8.3
