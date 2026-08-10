@@ -6,7 +6,7 @@
 
 一个轻量的导航站，支持搜索引擎集成，适合作为主页使用。有配套的[浏览器插件](https://github.com/Mereithhh/van-nav-extension)和 API。
 
-> 本项目 fork 自 [Mereithhh/van-nav](https://github.com/Mereithhh/van-nav)，在原版基础上进行了架构重构、安全加固和工程化改进。详见[与上游项目的区别](#与上游项目的区别)。
+> 本项目 fork 自 [Mereithhh/van-nav](https://github.com/Mereithhh/van-nav)的frok：https://github.com/thirsty5034/van-nav ，在原版基础上进行了个性化改进。
 
 <a id="chinese"></a>
 
