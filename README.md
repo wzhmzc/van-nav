@@ -8,10 +8,8 @@
 
 > 本项目 fork 自 [Mereithhh/van-nav](https://github.com/Mereithhh/van-nav)的frok：https://github.com/thirsty5034/van-nav ，在原版基础上进行了个性化改进。
 
-<a id="chinese"></a>
 
-> 🌐 **在线 Demo**：[van-nav-73v7.onrender.com](https://van-nav-73v7.onrender.com/)
-> （跟随 GitHub Docker 镜像自动部署更新，数据为演示用途，定期重置）
+
 
 ## 预览
 
