@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ghcr.io/thirsty5034/van-nav
+  IMAGE_NAME: ghcr.io/wzhmzc/van-nav
 
 jobs:
   build-and-push:
