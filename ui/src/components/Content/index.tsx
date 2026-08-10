@@ -211,7 +211,7 @@ const Content = (props: any) => {
     } catch (e) {
       console.log(t('home.cache.networkError'), e);
       if (!hadCache) {
-        // 无缓存时再尝试一次读（防御性）
+        // 无缓存时再尝试一次���（防御性）
         try {
           const cached = window.localStorage.getItem("van-nav-cache");
           if (cached) {
@@ -336,7 +336,7 @@ const Content = (props: any) => {
     if (best?.url) return best.url;
 
     // 工具无命中：若当前 ref 里已有基于同一/旧 query 的引擎卡，用其首张兜底
-    // （引擎卡 id 段 8800880000+）；flush 后 effect 会很快用正确汉字重建
+    // （引擎卡 id 段 8800880000+）；flush 后 effect 会很快用正���汉字重建
     const cards = filteredDataRef.current || [];
     for (const c of cards) {
       if (c?.url && typeof c.id === 'number' && c.id >= 8800880000) {
@@ -444,7 +444,7 @@ const Content = (props: any) => {
       return [...scoredList.map((node: any) => node.item), ...searchEngineCards];
     }
 
-    // 3. 非搜索 + 全部工具 + 智能排序开启 → 按综合得分
+    // 3. 非搜索 + 全部工具 + 智能排序开��� → 按综合得分
     if (currTag === '全部工具' && sortByClicks) {
       // P2: 批量计算一次，sort 中零 localStorage 开销
       const scoreMap = batchGetTotalScores(categoryFiltered);
@@ -591,17 +591,14 @@ const Content = (props: any) => {
       return;
     }
 
-    // Enter：以输入框当前值同步 flush 后打开首条，消灭 150ms 防抖竞态
+    // Enter：以输入框当前值同步 flush 后直接打开谷歌搜索（自定义行为）
     if (ev.key === 'Enter' || ev.keyCode === 13) {
       const q = flushSearch(valRef.current);
       if (!q) return;
-      const url = pickFirstMatchUrl(q);
-      if (url) {
-        // 阻止 input type=search 的隐式 submit / 浏览器默认行为
-        ev.preventDefault();
-        window.open(url, "_blank");
-        resetSearch();
-      }
+      ev.preventDefault();
+      const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(q)}`;
+      window.open(googleUrl, "_blank");
+      resetSearch();
       return;
     }
 

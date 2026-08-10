@@ -38,6 +38,7 @@ import {
 } from "../../../utils/api";
 import { useData } from "../hooks/useData";
 import { useTranslation } from "../../../i18n";
+import LogoSearchSelect from "../../../components/LogoSearchSelect";
 import type { DragEndEvent } from '@dnd-kit/core';
 import { DndContext } from '@dnd-kit/core';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
@@ -825,25 +826,7 @@ export const Tools: React.FC<ToolsProps> = (props) => {
               <Input placeholder={t("admin.tools.form.urlPlaceholder")} />
             </Form.Item>
             <Form.Item name="logo" label={t("admin.tools.form.logoUrl")} labelCol={{ span: 4 }}>
-              <Input 
-                placeholder={t("admin.tools.form.logoPlaceholder")}
-                addonAfter={
-                  <Tooltip title={t("admin.tools.form.autoFavicon")}>
-                    <Button 
-                      type="text" 
-                      size="small" 
-                      icon={<CloudDownloadOutlined />} 
-                      loading={gettingFavicon}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleGetFavicon(addForm, 'add');
-                      }}
-                      style={{ padding: 0 }}
-                    />
-                  </Tooltip>
-                }
-              />
+              <LogoSearchSelect placeholder={t("admin.tools.form.logoPlaceholder")} />
             </Form.Item>
             <Form.Item
               name="catelog"
@@ -952,25 +935,7 @@ export const Tools: React.FC<ToolsProps> = (props) => {
               <Input placeholder={t("admin.tools.form.urlPlaceholder")} />
             </Form.Item>
             <Form.Item name="logo" label={t("admin.tools.form.logoUrl")} labelCol={{ span: 4 }}>
-              <Input 
-                placeholder={t("admin.tools.form.logoPlaceholder")}
-                addonAfter={
-                  <Tooltip title={t("admin.tools.form.autoFavicon")}>
-                    <Button 
-                      type="text" 
-                      size="small" 
-                      icon={<CloudDownloadOutlined />} 
-                      loading={gettingFavicon}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleGetFavicon(updateForm, 'update');
-                      }}
-                      style={{ padding: 0 }}
-                    />
-                  </Tooltip>
-                }
-              />
+              <LogoSearchSelect placeholder={t("admin.tools.form.logoPlaceholder")} />
             </Form.Item>
             <Form.Item
               name="catelog"
