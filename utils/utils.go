@@ -120,8 +120,12 @@ func GetImgBase64FromUrl(url string) string {
 }
 
 func GetSuffixFromUrl(url string) string {
-	suffix := url[strings.LastIndex(url, "."):]
-	return suffix
+	// 无点的 URL（如 localhost）直接返回空，避免 url[-1:] 越界 panic
+	idx := strings.LastIndex(url, ".")
+	if idx < 0 {
+		return ""
+	}
+	return url[idx:]
 }
 func GetMIME(suffix string) string {
 	var t string = "image/x-icon"

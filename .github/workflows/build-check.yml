@@ -40,6 +40,9 @@ jobs:
           cd ..
           cp -r ui/build/* public/
 
+      - name: Run Go Tests
+        run: go test ./...
+
       - name: Build Backend
         env:
           # 部署机是 Oracle Cloud arm64（Ubuntu 24.04），交叉编译出 arm64 二进制
