@@ -38,7 +38,7 @@ jobs:
           pnpm install --frozen-lockfile --ignore-scripts
           pnpm build
           cd ..
-          cp -r ui/build/* public/
+          cp -r ui/dist/* public/
 
       - name: Run Go Tests
         run: go test ./...

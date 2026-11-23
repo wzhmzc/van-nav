@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Van Nav" />
+    <link rel="manifest" href="/manifest.json" />
+    <script>
+      const mode = window.localStorage.getItem("theme");
+      if (mode && mode == 'dark') {
+        const el = document.querySelector("body");
+        if (el) {
+          el.classList.toggle("dark-mode", true);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

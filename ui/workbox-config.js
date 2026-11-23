@@ -1,9 +1,9 @@
 module.exports = {
-  globDirectory: "build/",
+  globDirectory: "dist/",
   globPatterns: [
-    "**/*.{json,ico,html,png,txt,css,js}"
+    "**/*.{json,ico,html,png,txt,css,js,webp,svg}"
   ],
-  swDest: "build/service-worker.js",
+  swDest: "dist/service-worker.js",
   skipWaiting: true,
   clientsClaim: true,
   runtimeCaching: [{

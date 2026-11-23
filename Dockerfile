@@ -18,7 +18,7 @@ WORKDIR /build
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-COPY --from=frontend /build/ui/build /build/public
+COPY --from=frontend /build/ui/dist /build/public
 ARG VERSION=docker
 RUN GONOSUMCHECK=* GOFLAGS=-mod=mod go build -ldflags="-s -w -X main.Version=${VERSION}" -o van-nav .
 
