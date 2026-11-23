@@ -223,6 +223,15 @@ func GetAllHandler(c *gin.Context) {
 	})
 }
 
+// decodeRawDataURI 还原 data: URI 中可能出现的 percent 编码字符。
+// 只覆盖 data URI 会遇到的字符集，避免与局部变量 url 的包名作用域冲突。
+func decodeRawDataURI(raw string) string {
+	return strings.NewReplacer(
+		"%2B", "+", "%2F", "/", "%3D", "=", "%3B", ";",
+		"%3A", ":", "%2C", ",", "%26", "&", "%25", "%",
+	).Replace(raw)
+}
+
 // serveDataURI 直接返回 data: URI 内嵌的图片，不经过 nav_img 缓存查找。
 // 后台旧版前端会把 base64 logo 原样拼进 query（不做 URL 编码），
 // 其中 + 经 URL 解码后变成空格，这里还原；否则会落到「缓存未命中 → 灰色占位图」。
@@ -261,6 +270,13 @@ func serveDataURI(c *gin.Context, dataURI string) {
 
 func GetLogoImgHandler(c *gin.Context) {
 	url := c.Query("url")
+	// Go 1.17+ 把 ; 当成非法 query 分隔符：未编码的 data: URI（形如 data:image/svg+xml;base64,…）
+	// 会让整段 query 解析失败被丢弃，url 变空。这里从原始 RawQuery 兜底还原，兼容旧版前端。
+	if url == "" {
+		if rq := c.Request.URL.RawQuery; strings.HasPrefix(rq, "url=data:") {
+			url = decodeRawDataURI(strings.TrimPrefix(rq, "url="))
+		}
+	}
 	if url == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"success":      false,
