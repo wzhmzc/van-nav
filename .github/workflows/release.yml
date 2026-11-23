@@ -33,10 +33,10 @@ jobs:
           rm -rf ./public
           mkdir -p public
           echo '构建用户页面'
-          cd ui && pnpm install && pnpm build && cd ..
-          cp -r ui/build/* public/
+          cd ui && pnpm install --frozen-lockfile && pnpm build && cd ..
+          cp -r ui/dist/* public/
           echo '构建前端数据完成'
-          ls public/static
+          ls public/
           git stash
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
