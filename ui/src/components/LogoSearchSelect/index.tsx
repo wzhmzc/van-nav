@@ -42,7 +42,9 @@ const LogoSearchSelect: React.FC<LogoSearchSelectProps> = ({
         if (fetchId !== fetchIdRef.current) return; // 丢弃过期请求
         const icons: string[] = data?.icons || [];
         const opts: IconOption[] = icons.slice(0, 20).map((icon) => {
-          const svgUrl = `https://api.iconify.design/${icon}.svg`;
+          // Iconify 新版只认 prefix/name.svg，旧的 prefix:name.svg 已 404
+          const iconPath = icon.replace(":", "/");
+          const svgUrl = `https://api.iconify.design/${iconPath}.svg`;
           return {
             value: svgUrl,
             iconName: icon,
