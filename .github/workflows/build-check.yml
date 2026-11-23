@@ -40,6 +40,11 @@ jobs:
           cd ..
           cp -r ui/dist/* public/
 
+      - name: Run Frontend Tests
+        run: |
+          cd ui
+          CI=true pnpm test --watchAll=false
+
       - name: Run Go Tests
         run: go test ./...
 

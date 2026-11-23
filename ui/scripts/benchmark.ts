@@ -16,8 +16,8 @@ if (typeof globalThis.localStorage === 'undefined') {
   };
 }
 
-import { getSearchRelevanceScore } from "../utils/searchScore";
-import { getTotalScore } from "../utils/clickTracker";
+import { getSearchRelevanceScore } from "../src/utils/searchScore";
+import { getTotalScore } from "../src/utils/clickTracker";
 
 // ---- 构造 2000 条模拟工具数据 ----
 const mockTools: any[] = [];
