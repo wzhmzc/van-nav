@@ -41,6 +41,11 @@ jobs:
           cp -r ui/build/* public/
 
       - name: Build Backend
+        env:
+          # 部署机是 Oracle Cloud arm64（Ubuntu 24.04），交叉编译出 arm64 二进制
+          GOOS: linux
+          GOARCH: arm64
+          CGO_ENABLED: "0"
         run: |
           go mod tidy
           go build -v -ldflags="-s -w" -o van-nav .
@@ -56,7 +61,7 @@ jobs:
       - name: Upload Binary Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: van-nav-linux-amd64
+          name: van-nav-linux-arm64
           path: van-nav
           retention-days: 30
 
