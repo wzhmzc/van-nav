@@ -1,6 +1,7 @@
 package service
 
 import (
+	"strings"
 	"sync"
 
 	"github.com/mereith/nav/database"
@@ -50,16 +51,30 @@ func ImportTools(data []types.Tool) ImportToolsResult {
 		}
 	}
 
-	// 异步转存所有图片
+	// 异步转存所有图片（限 5 并发：UpdateImg 单次最长 10s 超时，导入大量站点时串行会拖很久；
+	// data: 内嵌图跳过，转存对它只会白等一次超时）
 	go func() {
 		defer func() {
 			if r := recover(); r != nil {
 				logger.LogError("ImportTools async image download panic: %v", r)
 			}
 		}()
+		sem := make(chan struct{}, 5)
+		var wg sync.WaitGroup
 		for _, v := range data {
-			UpdateImg(v.Logo)
+			logo := v.Logo
+			if logo == "" || strings.HasPrefix(logo, "data:") {
+				continue
+			}
+			wg.Add(1)
+			sem <- struct{}{}
+			go func(l string) {
+				defer wg.Done()
+				defer func() { <-sem }()
+				UpdateImg(l)
+			}(logo)
 		}
+		wg.Wait()
 	}()
 
 	InvalidateAllDataCache()

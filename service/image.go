@@ -24,11 +24,12 @@ func getIcon(url string) string {
 	} else {
 		var first string = s.Preview.Link
 		var second string = s.Preview.Icon
-		if !strings.Contains(s.Preview.Link[len(s.Preview.Link)-1:len(s.Preview.Link)], "/") {
+		// 空串保护：Preview.Link / Icon 会被页面 meta 覆盖，抓到空值时直接切片会 panic
+		if s.Preview.Link != "" && !strings.HasSuffix(s.Preview.Link, "/") {
 			first = s.Preview.Link + "/"
 		}
-		if strings.Contains(s.Preview.Icon[0:1], "/") {
-			second = s.Preview.Icon[1:len(s.Preview.Icon)]
+		if s.Preview.Icon != "" && strings.HasPrefix(s.Preview.Icon, "/") {
+			second = s.Preview.Icon[1:]
 		}
 		result = first + second
 	}
@@ -43,6 +44,10 @@ func LazyFetchLogo(url string, id int64) {
 		}
 	}()
 	logo := getIcon(url)
+	if logo == "" {
+		// 抓不到就保留原有 logo，避免把用户手工设置过的图标清空
+		return
+	}
 	UpdateToolIcon(id, logo)
 }
 
