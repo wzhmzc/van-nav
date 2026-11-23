@@ -223,6 +223,42 @@ func GetAllHandler(c *gin.Context) {
 	})
 }
 
+// serveDataURI 直接返回 data: URI 内嵌的图片，不经过 nav_img 缓存查找。
+// 后台旧版前端会把 base64 logo 原样拼进 query（不做 URL 编码），
+// 其中 + 经 URL 解码后变成空格，这里还原；否则会落到「缓存未命中 → 灰色占位图」。
+func serveDataURI(c *gin.Context, dataURI string) {
+	comma := strings.IndexByte(dataURI, ',')
+	if comma < 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"success": false, "errorMessage": "data URI 格式错误"})
+		return
+	}
+	meta := dataURI[5:comma]
+	payload := dataURI[comma+1:]
+	mime := strings.Split(meta, ";")[0]
+	if !strings.HasPrefix(mime, "image/") {
+		mime = "image/png"
+	}
+	var raw []byte
+	var err error
+	if strings.Contains(meta, "base64") {
+		payload = strings.ReplaceAll(payload, " ", "+")
+		raw, err = base64.StdEncoding.DecodeString(payload)
+		if err != nil {
+			raw, err = base64.RawStdEncoding.DecodeString(strings.TrimRight(payload, "="))
+		}
+	} else {
+		raw = []byte(payload)
+	}
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"success": false, "errorMessage": "图片解码失败"})
+		return
+	}
+	if mime == "image/svg+xml" {
+		c.Header("Cache-Control", "public, max-age=604800")
+	}
+	c.Data(http.StatusOK, mime, raw)
+}
+
 func GetLogoImgHandler(c *gin.Context) {
 	url := c.Query("url")
 	if url == "" {
@@ -230,6 +266,11 @@ func GetLogoImgHandler(c *gin.Context) {
 			"success":      false,
 			"errorMessage": "URL参数不能为空",
 		})
+		return
+	}
+	// data: URI 单独处理，避免走缓存查询后返回占位图
+	if strings.HasPrefix(url, "data:") {
+		serveDataURI(c, url)
 		return
 	}
 	img, err := service.GetImgFromDB(url)

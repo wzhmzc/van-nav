@@ -22,6 +22,7 @@ import {
 import { HolderOutlined, DragOutlined, QuestionCircleOutlined, CloudDownloadOutlined, HeartOutlined, CheckCircleOutlined, CloseCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import React, { useCallback, useState, useEffect, useContext, useMemo } from "react";
 import { getFilter, getOptions, mutiSearch } from "../../../utils/admin";
+import { getLogoUrl } from "../../../utils/check";
 import {
   fetchAddTool,
   fetchDeleteTool,
@@ -682,7 +683,7 @@ export const Tools: React.FC<ToolsProps> = (props) => {
                     }}>
                       {" "}
                         <img
-                          src={`/api/img?url=${record.logo}`}
+                          src={getLogoUrl(record.logo)}
                           width={32}
                           height={32}
                           loading="lazy"
