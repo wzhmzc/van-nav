@@ -18,7 +18,7 @@ func TestLooksLikeImage(t *testing.T) {
 		{"GIF87a", []byte("GIF87a\x01\x00\x01\x00"), true},
 		{"GIF89a", []byte("GIF89a\x01\x00\x01\x00"), true},
 		{"ICO", []byte("\x00\x00\x01\x00\x01\x00\x20\x20"), true},
-		{"BMP", []byte("BM\x36\x00\x00\x00"), true},
+		{"BMP", []byte("BM\x36\x00\x00\x00\x00\x00\x00\x00"), true},
 		{"WEBP", []byte("RIFF\x24\x00\x00\x00WEBPVP8 "), true},
 		{"SVG 带 XML 声明", []byte(`<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg"></svg>`), true},
 		{"SVG 裸标签", []byte(`<svg xmlns="http://www.w3.org/2000/svg" width="24"></svg>`), true},
